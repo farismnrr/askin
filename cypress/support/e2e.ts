@@ -28,7 +28,7 @@ const login = (email: string, password: string) => {
 			validate: () => {
 				cy.request({
 					method: 'GET',
-					url: '/api/v1/auths/',
+					url: '/api/v2/auths/',
 					headers: {
 						Authorization: 'Bearer ' + localStorage.getItem('token')
 					}
@@ -42,7 +42,7 @@ const register = (name: string, email: string, password: string) => {
 	return cy
 		.request({
 			method: 'POST',
-			url: '/api/v1/auths/signup',
+			url: '/api/v2/auths/signup',
 			body: {
 				name: name,
 				email: email,
