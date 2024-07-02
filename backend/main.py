@@ -815,11 +815,11 @@ app.mount("/ws", socket_app)
 app.mount("/ollama", ollama_app)
 app.mount("/openai", openai_app)
 
-app.mount("/images/api/v1", images_app)
-app.mount("/audio/api/v1", audio_app)
-app.mount("/rag/api/v1", rag_app)
+app.mount("/images/api/v2", images_app)
+app.mount("/audio/api/v2", audio_app)
+app.mount("/rag/api/v2", rag_app)
 
-app.mount("/api/v1", webui_app)
+app.mount("/api/v2", webui_app)
 
 webui_app.state.EMBEDDING_FUNCTION = rag_app.state.EMBEDDING_FUNCTION
 
