@@ -279,7 +279,7 @@ def get_models(user=Depends(get_verified_user)):
 
         else:
             r = requests.get(
-                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/sd-models",
+                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v2/sd-models",
                 headers={"authorization": get_automatic1111_api_auth()},
             )
             models = r.json()
@@ -307,7 +307,7 @@ async def get_default_model(user=Depends(get_admin_user)):
             return {"model": (app.state.config.MODEL if app.state.config.MODEL else "")}
         else:
             r = requests.get(
-                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/options",
+                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v2/options",
                 headers={"authorization": get_automatic1111_api_auth()},
             )
             options = r.json()
@@ -328,7 +328,7 @@ def set_model_handler(model: str):
     else:
         api_auth = get_automatic1111_api_auth()
         r = requests.get(
-            url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/options",
+            url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v2/options",
             headers={"authorization": api_auth},
         )
         options = r.json()
@@ -336,7 +336,7 @@ def set_model_handler(model: str):
         if model != options["sd_model_checkpoint"]:
             options["sd_model_checkpoint"] = model
             r = requests.post(
-                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/options",
+                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v2/options",
                 json=options,
                 headers={"authorization": api_auth},
             )
@@ -538,7 +538,7 @@ def generate_image(
                 data["negative_prompt"] = form_data.negative_prompt
 
             r = requests.post(
-                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/txt2img",
+                url=f"{app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v2/txt2img",
                 json=data,
                 headers={"authorization": get_automatic1111_api_auth()},
             )
