@@ -62,7 +62,7 @@ describe('Settings', () => {
 				.should('exist');
 			// spy on requests
 			const spy = cy.spy();
-			cy.intercept('GET', '/api/v1/chats/*', spy);
+			cy.intercept('GET', '/api/v2/chats/*', spy);
 			// Open context menu
 			cy.get('#chat-context-menu-button').click();
 			// Click share button
