@@ -50,7 +50,7 @@
 						</div>
 
 						<div class=" my-2">
-							Your entire contribution will go directly to the plugin developer; Open WebUI does not
+							Your entire contribution will go directly to the plugin developer; AskIn does not
 							take any percentage. However, the chosen funding platform might have its own fees.
 						</div>
 
