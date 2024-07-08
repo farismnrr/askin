@@ -1,4 +1,4 @@
-# Open Web UI Custom
+# AskIn
 
 This project is a customized web user interface application. The following instructions will help you set up and run the project on a Debian OS.
 
