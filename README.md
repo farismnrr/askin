@@ -77,9 +77,7 @@ chmod +x openwebui-manual.sh
 sudo bash openwebui-manual.sh
 ```
 
-## Installation
-
-### Installation by Docker
+### 3. Installation by Docker
 ```bash
 wget gs://farismnrr-gclouds.appspot.com/openwebui.sh
 chmod +x openwebui.sh
