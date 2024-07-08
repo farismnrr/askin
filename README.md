@@ -59,6 +59,24 @@ sudo -E bash nodesource_setup.sh
 sudo apt-get install -y nodejs
 ```
 
+#### e. Clone this repository
+```bash
+git clone https://github.com/farismnrr/open-web-ui-custom.git
+```
+
+#### f. Install Askin
+```bash
+cd open-web-ui-custom
+sudo bash run.sh
+```
+
+### 2. Fast Installation
+```bash
+wget https://storage.googleapis.com/farismnrr-gclouds.appspot.com/openwebui-manual.sh
+chmod +x openwebui-manual.sh
+sudo bash openwebui-manual.sh
+```
+
 ## Installation
 
 ### Installation by Docker
