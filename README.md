@@ -79,9 +79,7 @@ sudo bash openwebui-manual.sh
 
 ### 3. Installation by Docker
 ```bash
-wget gs://farismnrr-gclouds.appspot.com/openwebui.sh
-chmod +x openwebui.sh
-./openwebui.sh
+docker run -d -p 80:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always farismnrr/open-web-ui:latest
 ```
 
 ## Usage
