@@ -2,7 +2,19 @@
 
 Semua screenshot: **1920 × 1080 px, 16:9**. Diambil dengan Playwright dari frontend dev yang sedang berjalan, menggunakan data demo dan tema terang. Screenshot mencakup viewport UI utuh tanpa browser chrome; bukan screenshot halaman panjang.
 
-Untuk showcase satu halaman, gunakan **[askin-showcase.png](askin-showcase.png)**. Lima gambar lain tersedia sebagai pilihan pendukung.
+Untuk thumbnail produk satu halaman, gunakan **[thumbnail.png](thumbnail.png)**: komposisi 16:9 dengan branding AskIn, copy singkat, dan layar New Chat. Sumbernya ada di **[thumbnail.html](thumbnail.html)**, menggunakan HTML/CSS sederhana dengan aset lokal.
+
+[askin-showcase.png](askin-showcase.png) adalah screenshot UI New Chat utuh. Lima gambar lain tersedia sebagai pilihan pendukung.
+
+## Render thumbnail
+
+Setelah Playwright tersedia dengan langkah di bawah, jalankan dari root repository:
+
+```sh
+env PLAYWRIGHT_MODULE=/tmp/askin-showcase-tools/node_modules/playwright/index.mjs node scripts/render-thumbnail.mjs
+```
+
+Output: `screenshots/showcase/thumbnail.png`, **1920 × 1080 px**. Render memakai file HTML dan aset lokal, sehingga tidak memerlukan frontend atau backend yang berjalan.
 
 ## Peta screen
 
