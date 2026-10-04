@@ -1,0 +1,86 @@
+name: Portfolio Screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/portfolio-screenshots.yml'
+      - 'scripts/portfolio-mock-backend.mjs'
+      - 'scripts/capture-portfolio-screenshots.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    name: Capture AskIn UI
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci
+
+      - name: Install Playwright for CI only
+        run: |
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start mock backend
+        run: |
+          node scripts/portfolio-mock-backend.mjs > /tmp/askin-mock-backend.log 2>&1 &
+          echo $! > /tmp/askin-mock-backend.pid
+
+      - name: Start AskIn frontend
+        run: |
+          npx vite dev --host 127.0.0.1 --port 4173 > /tmp/askin-vite.log 2>&1 &
+          echo $! > /tmp/askin-vite.pid
+
+      - name: Wait for UI services
+        run: |
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8080/health >/dev/null \
+              && curl --fail --silent http://127.0.0.1:4173/auth >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+
+          echo 'Mock backend log:'
+          cat /tmp/askin-mock-backend.log || true
+          echo 'Vite log:'
+          cat /tmp/askin-vite.log || true
+          exit 1
+
+      - name: Capture screenshots
+        env:
+          FRONTEND_URL: http://127.0.0.1:4173
+          SCREENSHOT_DIR: artifacts/portfolio-screenshots
+        run: node scripts/capture-portfolio-screenshots.mjs
+
+      - name: Upload screenshot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: askin-portfolio-screenshots
+          path: artifacts/portfolio-screenshots/*.png
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Print service logs on failure
+        if: failure()
+        run: |
+          echo 'Mock backend log:'
+          cat /tmp/askin-mock-backend.log || true
+          echo 'Vite log:'
+          cat /tmp/askin-vite.log || true
