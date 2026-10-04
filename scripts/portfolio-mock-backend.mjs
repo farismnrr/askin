@@ -4,6 +4,7 @@ import { extname, join, normalize } from 'node:path';
 
 const host = '127.0.0.1';
 const port = Number(process.env.MOCK_BACKEND_PORT || 8080);
+const frontendOrigin = process.env.FRONTEND_ORIGIN || 'http://127.0.0.1:4173';
 
 const config = {
   status: true,
@@ -51,13 +52,17 @@ const demoModels = {
   ]
 };
 
+const corsHeaders = {
+  'access-control-allow-origin': frontendOrigin,
+  'access-control-allow-credentials': 'true',
+  'access-control-allow-headers': 'authorization, content-type',
+  'access-control-allow-methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+};
+
 const json = (res, body, status = 200) => {
   res.writeHead(status, {
     'content-type': 'application/json; charset=utf-8',
-    'access-control-allow-origin': '*',
-    'access-control-allow-credentials': 'true',
-    'access-control-allow-headers': 'authorization, content-type',
-    'access-control-allow-methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    ...corsHeaders
   });
   res.end(JSON.stringify(body));
 };
@@ -79,12 +84,7 @@ const server = createServer(async (req, res) => {
   const path = url.pathname;
 
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, {
-      'access-control-allow-origin': '*',
-      'access-control-allow-credentials': 'true',
-      'access-control-allow-headers': 'authorization, content-type',
-      'access-control-allow-methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
-    });
+    res.writeHead(204, corsHeaders);
     return res.end();
   }
 
@@ -102,7 +102,7 @@ const server = createServer(async (req, res) => {
       const file = await readFile(join(process.cwd(), 'backend', 'static', relativePath));
       res.writeHead(200, {
         'content-type': staticContentType(relativePath),
-        'access-control-allow-origin': '*'
+        ...corsHeaders
       });
       return res.end(file);
     } catch {
