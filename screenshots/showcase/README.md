@@ -2,7 +2,22 @@
 
 Semua screenshot: **1920 × 1080 px, 16:9**. Diambil dengan Playwright dari frontend dev yang sedang berjalan, menggunakan data demo dan tema terang. Screenshot mencakup viewport UI utuh tanpa browser chrome; bukan screenshot halaman panjang.
 
-Untuk thumbnail produk satu halaman, gunakan **[thumbnail.png](thumbnail.png)**: komposisi 16:9 dengan branding AskIn, copy singkat, dan layar New Chat. Sumbernya ada di **[thumbnail.html](thumbnail.html)**, menggunakan HTML/CSS sederhana dengan aset lokal.
+Untuk thumbnail produk satu halaman, gunakan **[thumbnail.png](thumbnail.png)**: komposisi 16:9 dengan branding AskIn dan **empat screen**: New Chat, percakapan kode, workspace prompt, dan pilihan model. Sumbernya ada di **[thumbnail.html](thumbnail.html)**, menggunakan HTML/CSS sederhana dengan aset lokal.
+
+## Arah desain dan referensi
+
+- Palet dari tema terang aplikasi di `tailwind.config.js`: `#f9f9f9`, `#ececec`, `#e3e3e3`, `#676767`, dan `#171717`. Font Mona Sans dan logo memakai aset aplikasi.
+- New Chat menjadi fokus utama; dua panel pendukung memperlihatkan kode dan prompt. Pilihan model menjadi detail yang diperbesar di atas area chat.
+- Semua gambar berasal dari UI dev yang nyata dengan data demo. Capture khusus di [thumbnail-ui](thumbnail-ui) memakai viewport lebih kecil dan resolusi 2× agar detail tetap terbaca. Crop menonjolkan fitur; tidak mengubah isi UI.
+- Radius konsisten, alignment mengikuti grid, ruang antar panel teratur, dan border/shadow halus.
+
+Referensi yang dipakai untuk keputusan komposisi:
+
+- [Linear — A calmer interface for a product in motion](https://linear.app/now/behind-the-latest-design-refresh): hierarki perhatian, navigasi yang tidak mendominasi, dan pemisah halus.
+- [Linear — Brand guidelines](https://linear.app/brand): ruang di sekitar identitas dan penggunaan wordmark yang konsisten.
+- [Mobbin](https://mobbin.com/): penyajian screen produk dan detail fitur dalam panel yang jelas.
+
+Warna, logo, dan aset produk tetap milik AskIn; referensi digunakan sebagai inspirasi komposisi.
 
 [askin-showcase.png](askin-showcase.png) adalah screenshot UI New Chat utuh. Lima gambar lain tersedia sebagai pilihan pendukung.
 
@@ -15,6 +30,15 @@ env PLAYWRIGHT_MODULE=/tmp/askin-showcase-tools/node_modules/playwright/index.mj
 ```
 
 Output: `screenshots/showcase/thumbnail.png`, **1920 × 1080 px**. Render memakai file HTML dan aset lokal, sehingga tidak memerlukan frontend atau backend yang berjalan.
+
+Untuk memperbarui keempat capture UI, jalankan frontend dev terlebih dahulu, lalu:
+
+```sh
+env PLAYWRIGHT_MODULE=/tmp/askin-showcase-tools/node_modules/playwright/index.mjs node scripts/capture-thumbnail.mjs
+env PLAYWRIGHT_MODULE=/tmp/askin-showcase-tools/node_modules/playwright/index.mjs node scripts/render-thumbnail.mjs
+```
+
+`FRONTEND_URL` dapat mengganti alamat dev pada langkah capture. Backend tidak diperlukan.
 
 ## Peta screen
 

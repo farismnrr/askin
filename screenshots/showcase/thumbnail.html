@@ -3,119 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AskIn — Product showcase</title>
+  <title>AskIn — AI conversation workspace</title>
   <style>
     @font-face {
-      font-family: Mona;
+      font-family: 'Mona Sans';
       src: url('../../static/assets/fonts/Mona-Sans.woff2') format('woff2');
       font-weight: 100 900;
       font-display: swap;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
-    body {
-      display: grid;
-      min-height: 100vh;
-      place-items: center;
-      background: #101513;
-      font-family: Mona, Arial, sans-serif;
-    }
+    body { display: grid; place-items: center; min-height: 100vh; background: #ececec; font-family: 'Mona Sans', Arial, sans-serif; }
     .thumbnail {
+      /* AskIn's light theme: neutral surfaces, soft borders, black wordmark. */
+      --surface: #f9f9f9;
+      --ink: #171717;
+      --muted: #676767;
+      --border: #e3e3e3;
       position: relative;
       width: min(100vw, 1920px);
       aspect-ratio: 16 / 9;
       overflow: hidden;
       container-type: inline-size;
-      background: #111a17;
-      color: #f3f6ee;
-      isolation: isolate;
+      color: var(--ink);
+      background: var(--surface);
     }
-    .thumbnail::before {
-      content: '';
-      position: absolute;
-      width: 68%;
-      aspect-ratio: 1;
-      right: -14%;
-      top: -43%;
-      border-radius: 50%;
-      background: radial-gradient(circle, #315844 0%, #1c3328 40%, transparent 68%);
-      opacity: .75;
-      z-index: -1;
-    }
-    .header {
-      position: absolute;
-      inset: 6.3% 5.5% auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .brand { display: flex; align-items: center; gap: .72cqw; font-size: 1.9cqw; font-weight: 650; letter-spacing: -.06cqw; }
-    .brand img { width: 2.7cqw; height: 2.7cqw; border-radius: 50%; }
-    .category { color: #a5b5aa; font-size: .8cqw; font-weight: 600; letter-spacing: .17cqw; }
-    .copy { position: absolute; top: 27%; left: 5.5%; width: 32%; }
-    .eyebrow { margin: 0 0 1.45cqw; color: #c6e99a; font-size: .84cqw; font-weight: 650; letter-spacing: .13cqw; text-transform: uppercase; }
-    h1 { margin: 0; font-size: 7.8cqw; font-weight: 720; line-height: 1; letter-spacing: -.49cqw; }
-    h1 span { color: #c6e99a; }
-    .headline { margin: 1.5cqw 0 1.35cqw; font-size: 2.65cqw; font-weight: 550; line-height: 1.17; letter-spacing: -.09cqw; }
-    .description { margin: 0; color: #aab9af; font-size: 1.15cqw; line-height: 1.6; }
-    .product {
-      position: absolute;
-      top: 22.5%;
-      left: 40%;
-      width: 56%;
-      margin: 0;
-      padding: .38cqw;
-      border: 1px solid #708371;
-      border-radius: 1.16cqw;
-      background: #dbe3d7;
-      box-shadow: 0 2.4cqw 5cqw #0007;
-      transform: rotate(-2deg);
-    }
-    .product img { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: .8cqw; }
-    .caption {
-      position: absolute;
-      right: 5.5%;
-      top: 84%;
-      display: flex;
-      align-items: center;
-      gap: .5cqw;
-      color: #a5b5aa;
-      font-size: .78cqw;
-      letter-spacing: .03cqw;
-    }
-    .caption::before { content: ''; width: .35cqw; height: .35cqw; border-radius: 50%; background: #c6e99a; }
-    .footer {
-      position: absolute;
-      left: 5.5%;
-      bottom: 6.3%;
-      display: flex;
-      align-items: center;
-      gap: 1.3cqw;
-      color: #d3ddd2;
-      font-size: .88cqw;
-      font-weight: 500;
-    }
-    .footer span + span { border-left: 1px solid #45584a; padding-left: 1.3cqw; }
+    .header { position: absolute; top: 5.9%; left: 4.2%; right: 4.2%; display: flex; align-items: center; justify-content: space-between; }
+    .identity { display: flex; align-items: center; gap: 1.1cqw; }
+    .identity img { width: 4.7cqw; height: 4.7cqw; }
+    h1 { margin: 0; font-size: 5.2cqw; line-height: 1; font-weight: 700; letter-spacing: -.3cqw; }
+    .intro { width: 43%; }
+    .intro h2 { margin: 0 0 .6cqw; font-size: 2.15cqw; font-weight: 600; line-height: 1.2; letter-spacing: -.07cqw; }
+    .intro p { margin: 0; font-size: 1cqw; line-height: 1.5; color: var(--muted); }
+    .board { position: absolute; top: 24%; left: 4.2%; right: 4.2%; bottom: 8.7%; display: grid; grid-template-columns: 1.65fr 1fr; gap: 1.5cqw; }
+    figure { margin: 0; }
+    .panel { overflow: hidden; border: 1px solid var(--border); border-radius: 1.05cqw; background: white; box-shadow: 0 .3cqw .9cqw #17171705, 0 1.1cqw 2.5cqw #17171705; }
+    .label { display: flex; align-items: center; justify-content: space-between; height: 3.05cqw; padding: 0 1.2cqw; border-bottom: 1px solid var(--border); font-size: .97cqw; font-weight: 550; }
+    .label small { font-size: .7cqw; color: var(--muted); font-weight: 450; }
+    .hero { position: relative; }
+    .hero > img { display: block; width: 100%; height: calc(100% - 3.05cqw); object-fit: cover; object-position: top; }
+    .support { display: grid; grid-template-rows: 1.1fr 1fr; gap: 1.5cqw; min-height: 0; }
+    .detail { position: relative; }
+    .detail > img { display: block; width: calc(100% - 2cqw); margin: 1cqw; }
+    .code > img { height: calc(100% - 4.65cqw); object-fit: contain; object-position: top; }
+    .prompts > img { margin-top: .8cqw; }
+    .model-card { position: absolute; width: 22cqw; left: 35.5%; top: 62.2%; z-index: 2; box-shadow: 0 .5cqw 1.2cqw #1717170c, 0 1.3cqw 2.8cqw #17171712; }
+    .model-card .label { height: 2.65cqw; font-size: .9cqw; }
+    .model-card img { display: block; width: calc(100% - 1.5cqw); margin: .75cqw; }
+    .footer { position: absolute; bottom: 3.6%; left: 4.2%; right: 4.2%; display: flex; align-items: center; justify-content: space-between; font-size: .85cqw; color: var(--muted); }
+    .features { display: flex; align-items: center; gap: 1.3cqw; }
+    .features span + span::before { content: '·'; margin-right: 1.3cqw; color: #b4b4b4; }
+    .footer > span { font-size: .73cqw; letter-spacing: .04cqw; }
   </style>
 </head>
 <body>
-  <main class="thumbnail" aria-label="AskIn product showcase">
+  <main class="thumbnail" aria-label="AskIn product showcase with four application screens">
     <header class="header">
-      <div class="brand"><img src="../../static/favicon.png" alt=""><span>AskIn</span></div>
-      <div class="category">AI CONVERSATION WORKSPACE</div>
+      <div class="identity"><img src="../../static/favicon.png" alt=""><h1>AskIn</h1></div>
+      <div class="intro">
+        <h2>A workspace for your AI conversations.</h2>
+        <p>Explore ideas. Work through code. Keep your prompts close.</p>
+      </div>
     </header>
-    <section class="copy">
-      <p class="eyebrow">A little more clarity.</p>
-      <h1>AskIn<span>.</span></h1>
-      <p class="headline">Your AI.<br>One workspace.</p>
-      <p class="description">Conversations, code, and ideas.<br>Bring it all together.</p>
+    <section class="board" aria-label="Application screens">
+      <figure class="panel hero">
+        <figcaption class="label">Start a conversation <small>01 / CHAT</small></figcaption>
+        <img src="thumbnail-ui/chat.png" alt="AskIn New Chat screen with history, suggested prompts, and message composer">
+      </figure>
+      <div class="support">
+        <figure class="panel detail code">
+          <figcaption class="label">Work through code <small>02 / CONVERSATION</small></figcaption>
+          <img src="thumbnail-ui/code.png" alt="AskIn conversation showing an assistant response with highlighted TypeScript code">
+        </figure>
+        <figure class="panel detail prompts">
+          <figcaption class="label">Keep your best prompts <small>03 / WORKSPACE</small></figcaption>
+          <img src="thumbnail-ui/prompts.png" alt="AskIn prompt workspace with audit, summary, and translation templates">
+        </figure>
+      </div>
     </section>
-    <figure class="product">
-      <img src="askin-showcase.png" alt="AskIn interface with model selection, prompt suggestions, chat history, and a message composer">
+    <figure class="panel model-card">
+      <figcaption class="label">Choose your model <small>04 / MODELS</small></figcaption>
+      <img src="thumbnail-ui/models.png" alt="AskIn model selector showing the default assistant and available demo models">
     </figure>
-    <div class="caption">One place to start your next idea.</div>
     <footer class="footer">
-      <span>Multi-model chat</span><span>Code conversations</span><span>Prompt workspace</span>
+      <div class="features"><span>Multi-model chat</span><span>Code conversations</span><span>Reusable prompts</span></div>
+      <span>AI CONVERSATION WORKSPACE</span>
     </footer>
   </main>
 </body>
