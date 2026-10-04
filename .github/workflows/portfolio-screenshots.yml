@@ -7,7 +7,6 @@ on:
       - main
     paths:
       - '.github/workflows/portfolio-screenshots.yml'
-      - 'scripts/portfolio-mock-backend.mjs'
       - 'scripts/capture-portfolio-screenshots.mjs'
 
 permissions:
@@ -37,20 +36,17 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Start AskIn UI test environment
+      - name: Start AskIn frontend
         run: |
-          node scripts/portfolio-mock-backend.mjs > /tmp/askin-backend.log 2>&1 &
           npx vite dev --host 127.0.0.1 --port 4173 > /tmp/askin-vite.log 2>&1 &
 
           for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:8080/health >/dev/null \
-              && curl --fail --silent http://127.0.0.1:4173/auth >/dev/null; then
+            if curl --fail --silent http://127.0.0.1:4173/auth >/dev/null; then
               exit 0
             fi
             sleep 1
           done
 
-          cat /tmp/askin-backend.log || true
           cat /tmp/askin-vite.log || true
           exit 1
 
@@ -76,6 +72,4 @@ jobs:
 
       - name: Print logs on failure
         if: failure()
-        run: |
-          cat /tmp/askin-backend.log || true
-          cat /tmp/askin-vite.log || true
+        run: cat /tmp/askin-vite.log || true
