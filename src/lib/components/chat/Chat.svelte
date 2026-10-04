@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
 	import { toast } from 'svelte-sonner';
-	import mermaid from 'mermaid';
+	import { renderMermaid } from '$lib/utils/mermaid';
 
 	import { getContext, onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -9,44 +9,13 @@
 
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType } from 'i18next';
-	import { OLLAMA_API_BASE_URL, OPENAI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
+	import { WEBUI_BASE_URL } from '$lib/constants';
 
-	import {
-		chatId,
-		chats,
-		config,
-		type Model,
-		models,
-		settings,
-		showSidebar,
-		tags as _tags,
-		WEBUI_NAME,
-		banners,
-		user,
-		socket,
-		showCallOverlay,
-		tools
-	} from '$lib/stores';
-	import {
-		convertMessagesToHistory,
-		copyToClipboard,
-		extractSentencesForAudio,
-		getUserPosition,
-		promptTemplate,
-		splitStream
-	} from '$lib/utils';
+	import { chatId, chats, config, type Model, models, settings, showSidebar, WEBUI_NAME, banners, user, socket, showCallOverlay } from '$lib/stores';
+	import { convertMessagesToHistory, copyToClipboard, extractSentencesForAudio, promptTemplate, splitStream } from '$lib/utils';
 
 	import { generateChatCompletion } from '$lib/apis/ollama';
-	import {
-		addTagById,
-		createNewChat,
-		deleteTagById,
-		getAllChatTags,
-		getChatById,
-		getChatList,
-		getTagsById,
-		updateChatById
-	} from '$lib/apis/chats';
+	import { createNewChat, getChatById, getChatList, getTagsById, updateChatById } from '$lib/apis/chats';
 	import { generateOpenAIChatCompletion } from '$lib/apis/openai';
 	import { runWebSearch } from '$lib/apis/rag';
 	import { createOpenAITextStream } from '$lib/apis/streaming';
@@ -303,9 +272,7 @@
 	};
 
 	const chatCompletedHandler = async (modelId, messages) => {
-		await mermaid.run({
-			querySelector: '.mermaid'
-		});
+		await renderMermaid();
 
 		const res = await chatCompleted(localStorage.token, {
 			model: modelId,
@@ -778,7 +745,7 @@
 								if ($settings.notificationEnabled && !document.hasFocus()) {
 									const notification = new Notification(`${model.id}`, {
 										body: responseMessage.content,
-										icon: `${WEBUI_BASE_URL}/static/favicon.png`
+										icon: `${WEBUI_BASE_URL}/favicon.png`
 									});
 								}
 
@@ -1063,7 +1030,7 @@
 				if ($settings.notificationEnabled && !document.hasFocus()) {
 					const notification = new Notification(`${model.id}`, {
 						body: responseMessage.content,
-						icon: `${WEBUI_BASE_URL}/static/favicon.png`
+						icon: `${WEBUI_BASE_URL}/favicon.png`
 					});
 				}
 

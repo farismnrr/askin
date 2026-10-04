@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getAudioConfig, updateAudioConfig } from '$lib/apis/audio';
-	import { user, settings, config } from '$lib/stores';
+	import { settings, config } from '$lib/stores';
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import Switch from '$lib/components/common/Switch.svelte';
+
 	import { getBackendConfig } from '$lib/apis';
 	import SensitiveInput from '$lib/components/common/SensitiveInput.svelte';
 	const dispatch = createEventDispatcher();

@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
+	import { goto } from '$app/navigation';
 	import { getContext } from 'svelte';
 
-	import { showSettings } from '$lib/stores';
+
 	import { flyAndScale } from '$lib/utils/transitions';
 
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
 	import QuestionMarkCircle from '$lib/components/icons/QuestionMarkCircle.svelte';
-	import Lifebuoy from '$lib/components/icons/Lifebuoy.svelte';
+
 	import Keyboard from '$lib/components/icons/Keyboard.svelte';
 	const i18n = getContext('i18n');
 
-	export let showDocsHandler: Function;
 	export let showShortcutsHandler: Function;
 
 	export let onClose: Function = () => {};
@@ -38,7 +38,7 @@
 				class="flex gap-2 items-center px-3 py-2 text-sm  cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 				id="chat-share-button"
 				on:click={() => {
-					window.open('https://docs.openwebui.com', '_blank');
+					goto('/help');
 				}}
 			>
 				<QuestionMarkCircle className="size-5" />

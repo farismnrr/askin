@@ -2,8 +2,8 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount, getContext } from 'svelte';
 
-	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
-	import { WEBUI_NAME, models, MODEL_DOWNLOAD_POOL, user, config } from '$lib/stores';
+
+	import { models, MODEL_DOWNLOAD_POOL } from '$lib/stores';
 	import { splitStream } from '$lib/utils';
 
 	import {

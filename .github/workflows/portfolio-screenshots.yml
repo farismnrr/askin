@@ -26,10 +26,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
 
       - name: Install application dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Install Playwright
         run: |
@@ -38,6 +42,7 @@ jobs:
 
       - name: Start AskIn frontend
         run: |
+          npm run pyodide:fetch
           npx vite dev --host 127.0.0.1 --port 4173 > /tmp/askin-vite.log 2>&1 &
 
           for i in {1..60}; do

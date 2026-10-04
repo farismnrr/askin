@@ -1,18 +1,15 @@
 <script lang="ts">
-	import Spinner from '$lib/components/common/Spinner.svelte';
+
 	import { copyToClipboard } from '$lib/utils';
-	import hljs from 'highlight.js';
 	import 'highlight.js/styles/github-dark.min.css';
-	import { loadPyodide } from 'pyodide';
-	import { onMount, tick } from 'svelte';
-	import PyodideWorker from '$lib/workers/pyodide.worker?worker';
+
 
 	export let id = '';
 
 	export let lang = '';
 	export let code = '';
 
-	let highlightedCode = null;
+	let highlightedCode: string | null = null;
 	let executing = false;
 
 	let stdout = null;
@@ -77,6 +74,7 @@
 
 			document.pyodideMplTarget = document.getElementById(`plt-canvas-${id}`);
 
+			const { loadPyodide } = await import('pyodide');
 			let pyodide = await loadPyodide({
 				indexURL: '/pyodide/',
 				stdout: (text) => {
@@ -168,6 +166,7 @@ __builtins__.input = input`);
 
 		console.log(packages);
 
+		const { default: PyodideWorker } = await import('$lib/workers/pyodide.worker?worker');
 		const pyodideWorker = new PyodideWorker();
 
 		pyodideWorker.postMessage({
@@ -206,8 +205,12 @@ __builtins__.input = input`);
 	let debounceTimeout;
 	$: if (code) {
 		// Function to perform the code highlighting
-		const highlightCode = () => {
-			highlightedCode = hljs.highlightAuto(code, hljs.getLanguage(lang)?.aliases).value || code;
+		const highlightCode = async () => {
+			const currentCode = code;
+			const currentLang = lang;
+			const { default: hljs } = await import('highlight.js');
+			if (currentCode !== code || currentLang !== lang) return;
+			highlightedCode = hljs.highlightAuto(currentCode, hljs.getLanguage(currentLang)?.aliases).value;
 		};
 
 		// Clear the previous timeout if it exists
@@ -222,7 +225,7 @@ __builtins__.input = input`);
 	<div
 		class="flex justify-between bg-[#202123] text-white text-xs px-4 pt-1 pb-0.5 rounded-t-lg overflow-x-auto"
 	>
-		<div class="p-1">{@html lang}</div>
+		<div class="p-1">{lang}</div>
 
 		<div class="flex items-center">
 			{#if lang.toLowerCase() === 'python' || lang.toLowerCase() === 'py' || (lang === '' && checkPythonCode(code))}
@@ -250,7 +253,7 @@ __builtins__.input = input`);
 			stderr ||
 			result) &&
 			'border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;'}"><code
-			class="language-{lang} rounded-t-none whitespace-pre">{@html highlightedCode || code}</code
+			class="language-{lang} rounded-t-none whitespace-pre">{#if highlightedCode !== null}{@html highlightedCode}{:else}{code}{/if}</code
 		></pre>
 
 	<div

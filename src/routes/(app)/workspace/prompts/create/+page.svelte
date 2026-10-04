@@ -55,25 +55,7 @@
 	};
 
 	onMount(async () => {
-		window.addEventListener('message', async (event) => {
-			if (
-				!['https://openwebui.com', 'https://www.openwebui.com', 'http://localhost:5173'].includes(
-					event.origin
-				)
-			)
-				return;
-			const prompt = JSON.parse(event.data);
-			console.log(prompt);
 
-			title = prompt.title;
-			await tick();
-			content = prompt.content;
-			command = prompt.command;
-		});
-
-		if (window.opener ?? false) {
-			window.opener.postMessage('loaded', '*');
-		}
 
 		if (sessionStorage.prompt) {
 			const prompt = JSON.parse(sessionStorage.prompt);

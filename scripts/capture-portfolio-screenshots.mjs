@@ -38,7 +38,7 @@ const demoUser = {
   email: 'faris@example.com',
   name: 'Faris',
   role: 'user',
-  profile_image_url: '/static/favicon.png',
+  profile_image_url: '/favicon.png',
   last_active_at: Math.floor(Date.now() / 1000),
   created_at: Math.floor(Date.now() / 1000)
 };
@@ -56,7 +56,7 @@ const demoModels = {
   ]
 };
 
-const favicon = await readFile(join(process.cwd(), 'backend', 'static', 'favicon.png'));
+const favicon = await readFile(join(process.cwd(), 'static', 'favicon.png'));
 
 const installApiRoutes = async (page) => {
   await page.route(`${apiOrigin}/**`, async (route) => {
@@ -99,7 +99,7 @@ const installApiRoutes = async (page) => {
 const seedSession = async (page) => {
   await page.addInitScript(() => {
     localStorage.setItem('token', 'portfolio-demo-token');
-    localStorage.setItem('version', 'portfolio-ci');
+    localStorage.setItem('version', '0.3.7');
     localStorage.setItem('theme', 'light');
     localStorage.setItem('locale', 'en-US');
   });

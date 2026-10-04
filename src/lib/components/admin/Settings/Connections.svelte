@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { models, user } from '$lib/stores';
-	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
+	import { createEventDispatcher, onMount, getContext } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -418,8 +418,8 @@
 						{$i18n.t('Trouble accessing Ollama?')}
 						<a
 							class=" text-gray-300 font-medium underline"
-							href="https://github.com/open-webui/open-webui#troubleshooting"
-							target="_blank"
+							href="/help#connections"
+
 						>
 							{$i18n.t('Click here for help.')}
 						</a>

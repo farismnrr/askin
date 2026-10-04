@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toast } from 'svelte-sonner';
+
 	import { onMount, tick, getContext } from 'svelte';
 	import { openDB, deleteDB } from 'idb';
 	import fileSaver from 'file-saver';
@@ -17,21 +17,7 @@
 	import { getBanners } from '$lib/apis/configs';
 	import { getUserSettings } from '$lib/apis/users';
 
-	import {
-		user,
-		showSettings,
-		settings,
-		models,
-		prompts,
-		documents,
-		tags,
-		banners,
-		showChangelog,
-		config,
-		showCallOverlay,
-		tools,
-		functions
-	} from '$lib/stores';
+	import { user, showSettings, settings, models, prompts, documents, tags, banners, showChangelog, config, tools, functions } from '$lib/stores';
 
 	import SettingsModal from '$lib/components/chat/SettingsModal.svelte';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';

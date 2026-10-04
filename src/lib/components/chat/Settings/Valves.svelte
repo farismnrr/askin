@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 
-	import { config, functions, models, settings, tools, user } from '$lib/stores';
-	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
+	import { functions, tools } from '$lib/stores';
+	import { createEventDispatcher, getContext, tick } from 'svelte';
 
 	import {
 		getUserValvesSpecById as getToolUserValvesSpecById,
@@ -15,7 +15,7 @@
 		updateUserValvesById as updateFunctionUserValvesById
 	} from '$lib/apis/functions';
 
-	import ManageModal from './Personalization/ManageModal.svelte';
+
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 

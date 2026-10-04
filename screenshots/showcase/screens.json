@@ -1,0 +1,55 @@
+{
+  "viewport": "1920×1080",
+  "aspectRatio": "16:9",
+  "source": "AskIn Vite development UI with demo data",
+  "captures": [
+    {
+      "file": "askin-showcase.png",
+      "screen": "New Chat",
+      "url": "/",
+      "description": "Primary showcase: the complete AskIn chat interface, sidebar, model selection, and prompt suggestions.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "02-code-review.png",
+      "screen": "Code review",
+      "url": "/c/chat-code-review",
+      "description": "Conversation history and syntax-highlighted code.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "03-model-selector.png",
+      "screen": "Model selection",
+      "url": "/c/chat-code-review",
+      "description": "The model selector showing available demo models.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "04-workspace-prompts.png",
+      "screen": "Prompt workspace",
+      "url": "/workspace/prompts",
+      "description": "Reusable prompt templates with import/export actions.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "05-workspace-models.png",
+      "screen": "Model workspace",
+      "url": "/workspace/models",
+      "description": "Model presets in the workspace.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "06-settings.png",
+      "screen": "Settings",
+      "url": "/",
+      "description": "Theme, language, and chat preferences.",
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}

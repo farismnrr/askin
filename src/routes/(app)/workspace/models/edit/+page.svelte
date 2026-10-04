@@ -1,14 +1,14 @@
 <script>
-	import { v4 as uuidv4 } from 'uuid';
+
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 
 	import { onMount, getContext } from 'svelte';
 	import { page } from '$app/stores';
-	import { settings, user, config, models, tools, functions } from '$lib/stores';
-	import { splitStream } from '$lib/utils';
+	import { models, tools, functions } from '$lib/stores';
 
-	import { getModelInfos, updateModelById } from '$lib/apis/models';
+
+	import { updateModelById } from '$lib/apis/models';
 
 	import AdvancedParams from '$lib/components/chat/Settings/Advanced/AdvancedParams.svelte';
 	import { getModels } from '$lib/apis';

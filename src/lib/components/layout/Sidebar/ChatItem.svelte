@@ -1,18 +1,12 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
-	import { onMount, getContext, createEventDispatcher, tick } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { getContext, createEventDispatcher } from 'svelte';
 	const i18n = getContext('i18n');
 
 	const dispatch = createEventDispatcher();
 
-	import {
-		archiveChatById,
-		cloneChatById,
-		deleteChatById,
-		getChatList,
-		updateChatById
-	} from '$lib/apis/chats';
+	import { archiveChatById, cloneChatById, getChatList, updateChatById } from '$lib/apis/chats';
 	import { chatId, chats, mobile, showSidebar } from '$lib/stores';
 
 	import ChatMenu from './ChatMenu.svelte';

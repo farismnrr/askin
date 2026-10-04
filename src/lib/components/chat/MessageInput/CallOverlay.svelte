@@ -2,12 +2,7 @@
 	import { config, models, settings, showCallOverlay } from '$lib/stores';
 	import { onMount, tick, getContext } from 'svelte';
 
-	import {
-		blobToFile,
-		calculateSHA256,
-		extractSentencesForAudio,
-		findWordIndices
-	} from '$lib/utils';
+	import { blobToFile } from '$lib/utils';
 	import { generateEmoji } from '$lib/apis';
 	import { synthesizeOpenAISpeech, transcribeAudio } from '$lib/apis/audio';
 

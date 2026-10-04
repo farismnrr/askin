@@ -1,19 +1,7 @@
 <script lang="ts">
 	import { getDocs } from '$lib/apis/documents';
-	import { deleteAllFiles, deleteFileById } from '$lib/apis/files';
-	import {
-		getQuerySettings,
-		scanDocs,
-		updateQuerySettings,
-		resetVectorDB,
-		getEmbeddingConfig,
-		updateEmbeddingConfig,
-		getRerankingConfig,
-		updateRerankingConfig,
-		resetUploadDir,
-		getRAGConfig,
-		updateRAGConfig
-	} from '$lib/apis/rag';
+	import { deleteAllFiles } from '$lib/apis/files';
+	import { getQuerySettings, scanDocs, updateQuerySettings, resetVectorDB, getEmbeddingConfig, updateEmbeddingConfig, getRerankingConfig, updateRerankingConfig, getRAGConfig, updateRAGConfig } from '$lib/apis/rag';
 	import ResetUploadDirConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 	import ResetVectorDBConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 

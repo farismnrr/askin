@@ -367,13 +367,18 @@ const askinApiPlugin = (): Plugin => ({
 				return sendJson(res, config);
 			}
 
+			if (path === '/api/chat/completed') {
+				const body = await readBody(req);
+				return sendJson(res, { messages: body.messages || [] });
+			}
+
 			if (path === '/api/version') {
 				return sendJson(res, { version: '0.3.7' });
 			}
 
 			if (path === '/api/changelog') {
 				return sendJson(res, {
-					changelog: '### AskIn v0.3.7 (Frontend-Only Mode)\n- Berjalan penuh dengan mock dummy data tanpa backend.\n- Fitur chat interaktif, streaming, dan workspace aktif.'
+					'0.3.7': { date: '2026-10-04', changed: [{ title: 'AskIn workspace', content: 'AskIn branding, working logos, and local help.' }] }
 				});
 			}
 
@@ -480,9 +485,13 @@ const askinApiPlugin = (): Plugin => ({
 				if (req.method === 'POST') {
 					const body = await readBody(req);
 					const existing = chats.get(id) || { id, title: 'Percakapan', chat: { messages: [] } };
+					const chat = { ...existing.chat, ...body.chat };
 					const updated = {
 						...existing,
 						...body,
+						chat,
+						title: chat.title || existing.title,
+						models: chat.models || existing.models,
 						updated_at: Math.floor(Date.now() / 1000)
 					};
 					chats.set(id, updated);
@@ -613,7 +622,7 @@ const askinApiPlugin = (): Plugin => ({
 					}
 				}, 35);
 
-				req.on('close', () => {
+				res.on('close', () => {
 					clearInterval(interval);
 				});
 				return;
@@ -648,7 +657,7 @@ const askinApiPlugin = (): Plugin => ({
 							res.end();
 						}
 					}, 35);
-					req.on('close', () => clearInterval(timer));
+					res.on('close', () => clearInterval(timer));
 					return;
 				} else {
 					return sendJson(res, {

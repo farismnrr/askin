@@ -1,97 +1,44 @@
 # AskIn
 
-This project is a customized web user interface application. The following instructions will help you set up and run the project on a Debian OS.
+AskIn is an AI conversation workspace built with SvelteKit. It includes chat history, model presets, prompt templates, documents, and light/dark themes.
 
-## Prerequisites
+## Frontend development
 
-Ensure you have the following installed on your Debian system:
+Install the locked dependencies with Bun, then start the frontend:
 
-- Docker
-- Python
-- Golang 1.22.2
-- Node.js
-
-## Installation
-
-### 1. Manual Installation
-
-#### a. Install Docker
-```bash
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-```
-```bash
-echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-```
-```bash
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```sh
+bun install --frozen-lockfile
+npm run dev -- --port 3003
 ```
 
-#### b. Install python
-```bash
-sudo apt update
-sudo apt install -y python3 python3-pip
+The development server listens on `0.0.0.0`, so it is reachable through localhost, LAN, and the host's Tailscale address. Choose a free port with `--port`; the server will fail if that port is occupied.
+
+The Vite development middleware supplies demo users, models, conversations, and streaming responses. No backend process, database, or external model provider is required. For the demo sign-in screen, any valid email format and any nonempty password work; use dummy values.
+
+Python runtime assets are copied from the installed package at startup. Diagram rendering, code highlighting, and Python execution load their libraries when needed.
+
+## Frontend commands
+
+```sh
+npm run build
+npm run check
+npm run audit:frontend
 ```
 
-#### c. Install golang
-```bash
-wget https://go.dev/dl/go1.22.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz
-echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
-source ~/.profile
-```
+`build` creates a static frontend. The demo middleware runs only in the Vite development server; the production build and `preview` do not provide its mock endpoints.
 
-#### d. Install nodejs
-```bash
-sudo apt-get install -y curl
-curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
-sudo -E bash nodesource_setup.sh
-```
-```bash
-sudo apt-get install -y nodejs
-```
+`check` runs the existing Svelte and TypeScript diagnostics. The inherited codebase still has substantial type errors; see [the frontend audit](docs/FRONTEND_AUDIT.md) for measured results and remaining work.
 
-#### e. Clone this repository
-```bash
-git clone https://github.com/farismnrr/open-web-ui-custom.git
-```
+`audit:frontend` walks imports from all frontend routes and reports unreachable source modules, unresolved local imports, and imported packages missing from the manifest. It is read-only and does not delete files. Review its findings before removing code; template-based imports and framework conventions need human judgment.
 
-#### f. Install Askin
-```bash
-cd open-web-ui-custom
-sudo bash run.sh
-```
+## Backend
 
-### 2. Fast Installation
-```bash
-wget https://storage.googleapis.com/farismnrr-gclouds.appspot.com/openwebui-manual.sh
-chmod +x openwebui-manual.sh
-sudo bash openwebui-manual.sh
-```
+The Python backend, Go backend, and existing deployment configuration are retained. Their code and service configuration were not changed by the frontend cleanup. The development command above starts the frontend only.
 
-### 3. Installation by Docker
-```bash
-docker run -d -p 80:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always farismnrr/open-web-ui:latest
-```
+## Showcase
 
-## Usage
-After completing the installation steps, the application will be running on port 80. You can access it through your web browser by navigating to http://localhost.
-
-## Contributing
-Feel free to open issues or submit pull requests if you have any improvements or bug fixes.
+The [showcase folder](screenshots/showcase/README.md) contains six screenshots at 1920 × 1080, including the primary AskIn showcase image and a screen map. The folder also includes instructions for repeating the Playwright capture.
 
 ## License
-This project is licensed under the MIT License.
 
-
-```bash
-Feel free to customize this `README.md` file further according to your project's specific needs and details.
-```
+See [LICENSE](LICENSE) for the existing license and attribution.

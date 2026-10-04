@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { marked } from 'marked';
+
 
 	import tippy from 'tippy.js';
 

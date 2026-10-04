@@ -1,5 +1,5 @@
 <script>
-	import { getContext, createEventDispatcher, onMount } from 'svelte';
+	import { getContext, createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
 
 	const dispatch = createEventDispatcher();
@@ -29,9 +29,7 @@
 	let codeEditor;
 	let boilerplate = `"""
 title: Example Filter
-author: open-webui
-author_url: https://github.com/open-webui
-funding_url: https://github.com/open-webui
+author: AskIn
 version: 0.1
 """
 

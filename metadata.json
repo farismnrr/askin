@@ -1,6 +1,6 @@
 {
   "name": "AskIn",
-  "description": "AskIn - An open web UI and intelligent conversational workspace for local and cloud AI models.",
+  "description": "AskIn - An intelligent conversational workspace for local and cloud AI models.",
   "prompt": "AskIn AI assistant workspace",
   "capabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

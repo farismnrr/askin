@@ -1,32 +1,13 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
-	import {
-		user,
-		chats,
-		settings,
-		showSettings,
-		chatId,
-		tags,
-		showSidebar,
-		mobile,
-		showArchivedChats
-	} from '$lib/stores';
+	import { user, chats, settings, chatId, tags, showSidebar, mobile, showArchivedChats } from '$lib/stores';
 	import { onMount, getContext, tick } from 'svelte';
 
 	const i18n = getContext('i18n');
 
 	import { updateUserSettings } from '$lib/apis/users';
-	import {
-		deleteChatById,
-		getChatList,
-		getChatById,
-		getChatListByTagName,
-		updateChatById,
-		getAllChatTags,
-		archiveChatById,
-		cloneChatById
-	} from '$lib/apis/chats';
+	import { deleteChatById, getChatList, getChatById, getChatListByTagName, getAllChatTags } from '$lib/apis/chats';
 	import { WEBUI_BASE_URL } from '$lib/constants';
 
 	import ArchivedChatsModal from './Sidebar/ArchivedChatsModal.svelte';
@@ -251,7 +232,7 @@
 				<div class="self-center mx-1.5">
 					<img
 						crossorigin="anonymous"
-						src="{WEBUI_BASE_URL}/static/favicon.png"
+						src="{WEBUI_BASE_URL}/favicon.png"
 						class=" size-6 -translate-x-1.5 rounded-full"
 						alt="logo"
 					/>

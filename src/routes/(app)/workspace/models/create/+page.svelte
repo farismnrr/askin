@@ -1,13 +1,13 @@
 <script>
-	import { v4 as uuidv4 } from 'uuid';
+
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
-	import { settings, user, config, models, tools, functions } from '$lib/stores';
+	import { models, tools, functions } from '$lib/stores';
 
 	import TurndownService from 'turndown';
 
 	import { onMount, tick, getContext } from 'svelte';
-	import { addNewModel, getModelById, getModelInfos } from '$lib/apis/models';
+	import { addNewModel } from '$lib/apis/models';
 	import { getModels } from '$lib/apis';
 
 	import AdvancedParams from '$lib/components/chat/Settings/Advanced/AdvancedParams.svelte';
@@ -15,7 +15,6 @@
 	import Tags from '$lib/components/common/Tags.svelte';
 	import Knowledge from '$lib/components/workspace/Models/Knowledge.svelte';
 	import ToolsSelector from '$lib/components/workspace/Models/ToolsSelector.svelte';
-	import { stringify } from 'postcss';
 	import { parseFile } from '$lib/utils/characters';
 	import FiltersSelector from '$lib/components/workspace/Models/FiltersSelector.svelte';
 
@@ -196,23 +195,7 @@
 	};
 
 	onMount(async () => {
-		window.addEventListener('message', async (event) => {
-			if (
-				!['https://openwebui.com', 'https://www.openwebui.com', 'http://localhost:5173'].includes(
-					event.origin
-				)
-			)
-				return;
 
-			const model = JSON.parse(event.data);
-			console.log(model);
-
-			initModel(model);
-		});
-
-		if (window.opener ?? false) {
-			window.opener.postMessage('loaded', '*');
-		}
 
 		if (sessionStorage.model) {
 			const model = JSON.parse(sessionStorage.model);

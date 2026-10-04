@@ -5,9 +5,9 @@
 	import tippy from 'tippy.js';
 	import auto_render from 'katex/dist/contrib/auto-render.mjs';
 	import 'katex/dist/katex.min.css';
-	import mermaid from 'mermaid';
+	import { renderMermaid } from '$lib/utils/mermaid';
 
-	import { fade } from 'svelte/transition';
+
 	import { createEventDispatcher } from 'svelte';
 	import { onMount, tick, getContext } from 'svelte';
 
@@ -366,9 +366,7 @@
 			await tick();
 			renderStyling();
 
-			await mermaid.run({
-				querySelector: '.mermaid'
-			});
+			await renderMermaid();
 		})();
 	}
 
@@ -376,9 +374,7 @@
 		await tick();
 		renderStyling();
 
-		await mermaid.run({
-			querySelector: '.mermaid'
-		});
+		await renderMermaid();
 	});
 </script>
 
@@ -392,7 +388,7 @@
 	>
 		<ProfileImage
 			src={model?.info?.meta?.profile_image_url ??
-				($i18n.language === 'dg-DG' ? `/doge.png` : `${WEBUI_BASE_URL}/static/favicon.png`)}
+				($i18n.language === 'dg-DG' ? `/doge.png` : `${WEBUI_BASE_URL}/favicon.png`)}
 		/>
 
 		<div class="w-full overflow-hidden pl-1">

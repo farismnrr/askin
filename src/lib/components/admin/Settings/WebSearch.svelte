@@ -2,9 +2,9 @@
 	import { getRAGConfig, updateRAGConfig } from '$lib/apis/rag';
 	import Switch from '$lib/components/common/Switch.svelte';
 
-	import { documents, models } from '$lib/stores';
+
 	import { onMount, getContext } from 'svelte';
-	import { toast } from 'svelte-sonner';
+
 	import SensitiveInput from '$lib/components/common/SensitiveInput.svelte';
 
 	const i18n = getContext('i18n');

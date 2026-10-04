@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { createEventDispatcher, tick, getContext } from 'svelte';
 	import { config, settings } from '$lib/stores';
-	import { blobToFile, calculateSHA256, findWordIndices } from '$lib/utils';
+	import { blobToFile } from '$lib/utils';
 
 	import { transcribeAudio } from '$lib/apis/audio';
 
@@ -306,11 +306,11 @@
 			{#each visualizerData.slice().reverse() as rms}
 				<div
 					class="w-[2px]
-                    
+
                     {loading
 						? ' bg-gray-500 dark:bg-gray-400   '
 						: 'bg-indigo-500 dark:bg-indigo-400  '} 
-                    
+
                     inline-block h-full"
 					style="height: {Math.min(100, Math.max(14, rms * 100))}%;"
 				/>
@@ -321,8 +321,8 @@
 	<div class="  mx-1.5 pr-1 flex justify-center items-center">
 		<div
 			class="text-sm
-        
-        
+
+
         {loading ? ' text-gray-500  dark:text-gray-400  ' : ' text-indigo-400 '} 
        font-medium flex-1 mx-auto text-center"
 		>
