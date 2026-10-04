@@ -30,7 +30,8 @@
     }
     .header { position: absolute; top: 5.9%; left: 4.2%; right: 4.2%; display: flex; align-items: center; justify-content: space-between; }
     .identity { display: flex; align-items: center; gap: 1.1cqw; }
-    .identity img { width: 4.7cqw; height: 4.7cqw; transform: translateY(.4cqw); }
+    /* Align the visible symbol's baseline with the wordmark, including the PNG's internal padding. */
+    .identity img { width: 4.7cqw; height: 4.7cqw; transform: translateY(.6cqw); }
     h1 { margin: 0; font-size: 5.2cqw; line-height: 1; font-weight: 700; letter-spacing: -.3cqw; }
     .intro { width: 43%; }
     .intro h2 { margin: 0 0 .6cqw; font-size: 2.15cqw; font-weight: 600; line-height: 1.2; letter-spacing: -.07cqw; }
