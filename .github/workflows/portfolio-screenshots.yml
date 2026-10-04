@@ -11,7 +11,7 @@ on:
       - 'scripts/capture-portfolio-screenshots.mjs'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   capture:
@@ -32,23 +32,16 @@ jobs:
       - name: Install application dependencies
         run: npm ci
 
-      - name: Install Playwright for CI only
+      - name: Install Playwright
         run: |
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Start mock backend
+      - name: Start AskIn UI test environment
         run: |
-          node scripts/portfolio-mock-backend.mjs > /tmp/askin-mock-backend.log 2>&1 &
-          echo $! > /tmp/askin-mock-backend.pid
-
-      - name: Start AskIn frontend
-        run: |
+          node scripts/portfolio-mock-backend.mjs > /tmp/askin-backend.log 2>&1 &
           npx vite dev --host 127.0.0.1 --port 4173 > /tmp/askin-vite.log 2>&1 &
-          echo $! > /tmp/askin-vite.pid
 
-      - name: Wait for UI services
-        run: |
           for i in {1..60}; do
             if curl --fail --silent http://127.0.0.1:8080/health >/dev/null \
               && curl --fail --silent http://127.0.0.1:4173/auth >/dev/null; then
@@ -57,30 +50,32 @@ jobs:
             sleep 1
           done
 
-          echo 'Mock backend log:'
-          cat /tmp/askin-mock-backend.log || true
-          echo 'Vite log:'
+          cat /tmp/askin-backend.log || true
           cat /tmp/askin-vite.log || true
           exit 1
 
-      - name: Capture screenshots
+      - name: Capture screenshots with Playwright
         env:
           FRONTEND_URL: http://127.0.0.1:4173
-          SCREENSHOT_DIR: artifacts/portfolio-screenshots
+          SCREENSHOT_DIR: screenshots/portfolio
         run: node scripts/capture-portfolio-screenshots.mjs
 
-      - name: Upload screenshot artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: askin-portfolio-screenshots
-          path: artifacts/portfolio-screenshots/*.png
-          if-no-files-found: error
-          retention-days: 14
+      - name: Save screenshots to GitHub
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add screenshots/portfolio/*.png
 
-      - name: Print service logs on failure
+          if git diff --cached --quiet; then
+            echo 'Screenshots unchanged.'
+            exit 0
+          fi
+
+          git commit -m 'docs: update AskIn portfolio screenshots'
+          git push
+
+      - name: Print logs on failure
         if: failure()
         run: |
-          echo 'Mock backend log:'
-          cat /tmp/askin-mock-backend.log || true
-          echo 'Vite log:'
+          cat /tmp/askin-backend.log || true
           cat /tmp/askin-vite.log || true
