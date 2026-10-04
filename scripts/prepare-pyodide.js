@@ -81,5 +81,8 @@ async function copyPyodide() {
     }
 }
 
-await downloadPackages();
-await copyPyodide();
+try {
+    await copyPyodide();
+} catch (e) {
+    console.warn('Pyodide copy skipped or already done:', e.message);
+}
