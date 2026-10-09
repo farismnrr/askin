@@ -2,6 +2,8 @@
 
 AskIn is an AI conversation workspace built with SvelteKit. It includes chat history, model presets, prompt templates, documents, and light/dark themes.
 
+**Portfolio case study:** https://farismnrr.com/projects/askin
+
 ## Frontend development
 
 Install the locked dependencies with Bun, then start the frontend:
